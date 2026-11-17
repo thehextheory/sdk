@@ -24,9 +24,10 @@ jobs:
         run: |
           publish() {
             name="$1"
-            version="$(npm pkg get version -w "$name" | tr -d '"')"
-            encoded="$(node -e "process.stdout.write(encodeURIComponent(process.argv[1]))" "$name")"
-            status="$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/${encoded}/${version}")"
+            manifest="$2"
+            version=$(node -p 'JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")).version' "$manifest")
+            encoded=$(node -p 'encodeURIComponent(process.argv[1])' "$name")
+            status=$(curl -s -o /dev/null -w '%{http_code}' "https://registry.npmjs.org/${encoded}/${version}")
             if [ "$status" = "200" ]; then
               echo "$name@$version is already on npm"
             else
@@ -34,5 +35,5 @@ jobs:
               npm publish -w "$name"
             fi
           }
-          publish @thehextheory/core
-          publish @thehextheory/cli
+          publish @thehextheory/core packages/core/package.json
+          publish @thehextheory/cli packages/cli/package.json

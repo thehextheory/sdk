@@ -1,0 +1,20 @@
+{
+  "name": "thehextheory-sdk",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/cli"
+  ],
+  "scripts": {
+    "build": "npm run build -w @thehextheory/core && npm run build -w @thehextheory/cli",
+    "test": "npm run build && node --test packages/core/test/*.test.mjs packages/cli/test/*.test.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

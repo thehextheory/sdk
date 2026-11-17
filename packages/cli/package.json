@@ -1,0 +1,20 @@
+{
+  "name": "@thehextheory/cli",
+  "version": "0.1.0",
+  "description": "Write a The Hex Theory brand scale as CSS variables or a Tailwind @theme block.",
+  "type": "module",
+  "bin": {
+    "thehextheory": "./dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@thehextheory/core": "0.1.0"
+  }
+}

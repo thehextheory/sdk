@@ -1,6 +1,6 @@
 {
   "name": "@thehextheory/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "OKLCH, APCA, CIEDE2000, and brand scales for The Hex Theory.",
   "type": "module",
   "main": "./dist/index.js",

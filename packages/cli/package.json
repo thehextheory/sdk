@@ -1,6 +1,6 @@
 {
   "name": "@thehextheory/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Write a The Hex Theory brand scale as CSS variables or a Tailwind @theme block.",
   "type": "module",
   "bin": {
@@ -27,6 +27,6 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@thehextheory/core": "0.1.1"
+    "@thehextheory/core": "0.1.2"
   }
 }

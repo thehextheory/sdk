@@ -20,5 +20,16 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: npm ci
       - run: npm test
-      - run: npm publish -w @thehextheory/core
-      - run: npm publish -w @thehextheory/cli
+      - name: Publish packages that are not on npm yet
+        run: |
+          publish() {
+            name="$1"
+            version="$(npm pkg get version -w "$name" | tr -d '"')"
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "$name@$version is already on npm"
+            else
+              npm publish -w "$name"
+            fi
+          }
+          publish @thehextheory/core
+          publish @thehextheory/cli

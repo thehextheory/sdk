@@ -1,7 +1,7 @@
 {
   "name": "@thehextheory/cli",
-  "version": "0.1.2",
-  "description": "Write a The Hex Theory brand scale as CSS variables or a Tailwind @theme block.",
+  "version": "0.2.0",
+  "description": "Brand scales, a contrast audit, and an MCP server for The Hex Theory.",
   "type": "module",
   "bin": {
     "thehextheory": "./dist/main.js"
@@ -27,6 +27,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@thehextheory/core": "0.1.2"
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@thehextheory/core": "0.2.0"
   }
 }

@@ -6,6 +6,7 @@ export { nearestCssColor, nearestTailwindStep, type PaletteMatch } from './neare
 export { parseColor, toHex, type RGB } from './rgb.js'
 export {
   accessibleVariant,
+  fixContrast,
   cssVarBlock,
   interfaceTheme,
   themeBlock,

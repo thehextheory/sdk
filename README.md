@@ -52,6 +52,34 @@ The command above writes a `:root` block. The name becomes the variable prefix, 
 
 `--theme` writes the same tokens inside `@theme` for Tailwind v4. `--name Tomato!` is sanitized to `tomato`. Leave off `--out` and the CSS is printed to stdout.
 
+## Audit a project
+
+`thehextheory audit` reads the current directory. It lists every `#rgb` and `#rrggbb` literal, and it flags a `color` and `background` in the same CSS declaration or JSX style object when the pair is under WCAG AA 4.5:1. The report includes a foreground hex that reaches that ratio. It does not rewrite files. `node_modules`, `dist`, `.git`, and `coverage` are skipped.
+
+```bash
+npx @thehextheory/cli audit
+npx @thehextheory/cli audit --ci
+```
+
+`--ci` exits 1 when there is at least one failing pair. A file of brand hexes with no failing pair exits 0.
+
+## MCP
+
+Cursor can call the same tools over stdio. Add this to the MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "thehextheory": {
+      "command": "npx",
+      "args": ["-y", "@thehextheory/cli", "mcp"]
+    }
+  }
+}
+```
+
+The server exposes `check_contrast`, `fix_contrast`, `generate_scale`, and `match_token`. Colors accept `#ff6347`, `tomato`, and `rgb()`.
+
 ## From TypeScript
 
 ```ts

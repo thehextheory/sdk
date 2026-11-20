@@ -177,6 +177,22 @@ function passes(rgb: RGB, against: RGB): boolean {
   return contrastRatio(rgb, against) >= AA
 }
 
+/**
+ * Move the foreground's OKLCH lightness, keeping its hue, until it reaches `target`
+ * against `background`. The closer of the lighter and darker results is returned.
+ */
+export function fixContrast(foreground: RGB, background: RGB, target = AA): RGB {
+  if (contrastRatio(foreground, background) >= target) return { ...foreground }
+  const lighter = holdContrast(foreground, background, 'lighter', target)
+  const darker = holdContrast(foreground, background, 'darker', target)
+  const passing = [lighter, darker].filter((color) => contrastRatio(color, background) >= target)
+  const pool = passing.length > 0 ? passing : [lighter, darker]
+  const sourceL = rgbToOklch(foreground).l
+  return pool.reduce((best, color) =>
+    Math.abs(rgbToOklch(color).l - sourceL) < Math.abs(rgbToOklch(best).l - sourceL) ? color : best,
+  )
+}
+
 /** Nearest lighter or darker OKLCH variant that reaches WCAG AA against black or white. */
 export function accessibleVariant(rgb: RGB, direction: 'lighter' | 'darker'): RGB {
   const against = direction === 'lighter' ? BLACK : WHITE

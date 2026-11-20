@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { deltaE2000, nearestCssColor, nearestTailwindStep, parseColor } from '@thehextheory/core'
+import { contrastRatio, deltaE2000, fixContrast, nearestCssColor, nearestTailwindStep, parseColor } from '@thehextheory/core'
 
 test('CIEDE2000 matches the Sharma reference pair', () => {
   const distance = deltaE2000(
@@ -39,4 +39,15 @@ test('an exact Tailwind hex matches that step', () => {
   const step = nearestTailwindStep(red)
   assert.equal(step.name, 'red-500')
   assert.ok(step.deltaE < 0.05)
+})
+
+test('fixContrast walks lightness until the pair reaches 4.5:1', () => {
+  const white = parseColor('#ffffff')
+  assert.ok(white)
+  const fixed = fixContrast(white, white)
+  assert.ok(contrastRatio(fixed, white) >= 4.5)
+  const already = fixContrast(parseColor('#000000'), white)
+  assert.equal(already.r, 0)
+  assert.equal(already.g, 0)
+  assert.equal(already.b, 0)
 })

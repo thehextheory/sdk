@@ -56,4 +56,32 @@ Steps 50–950 keep tomato's hue and drop its lightness down the ramp. The roles
 
 The scale itself comes from [`@thehextheory/core`](https://www.npmjs.com/package/@thehextheory/core). Use the library when you want the colors in JavaScript instead of a CSS file.
 
+## Audit
+
+From a project directory:
+
+```bash
+npx @thehextheory/cli audit
+npx @thehextheory/cli audit --ci
+```
+
+The command reads `.tsx`, `.jsx`, `.vue`, `.svelte`, `.css`, `.ts`, and `.js`. It skips `node_modules`, `dist`, `.git`, and `coverage`. Every `#rgb` and `#rrggbb` literal is listed with its file and line. A violation is a `color` and a `background` (or `background-color`) in the same CSS declaration or JSX style object whose contrast is under 4.5:1. The report includes a replacement foreground hex. Files are not rewritten.
+
+Comments, strings, regex literals, and template literals are skipped while matching braces. A hex is listed when it sits in a CSS declaration value or a JavaScript string; selectors such as `#add`, comments such as `fixes #123`, and entities such as `&#123;` are left out. When a block sets `color` or `background` twice, the last value wins, as in CSS. A pair whose background is a gradient or a variable is not judged. `--ci` exits 1 when a violation exists.
+
+## MCP
+
+```json
+{
+  "mcpServers": {
+    "thehextheory": {
+      "command": "npx",
+      "args": ["-y", "@thehextheory/cli", "mcp"]
+    }
+  }
+}
+```
+
+`check_contrast` returns the WCAG ratio, AA and AAA, and APCA Lc. `fix_contrast` returns a foreground hex that reaches the target ratio, 4.5 by default. `generate_scale` returns the 50–950 ramp; `theme: true` returns the `@theme` block. `match_token` returns the nearest `--color-*` or Tailwind config color in the working directory, or the nearest Tailwind step and CSS name when the directory has none.
+
 Node 20 or newer. MIT License.

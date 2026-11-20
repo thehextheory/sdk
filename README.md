@@ -65,7 +65,16 @@ npx @thehextheory/cli audit --ci
 
 ## MCP
 
-Cursor can call the same tools over stdio. Add this to the MCP settings:
+The CLI also runs as an MCP server over stdio. Node 20 or newer is required.
+
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=thehextheory&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkB0aGVoZXh0aGVvcnkvY2xpIiwibWNwIl19)
+
+```bash
+claude mcp add --scope user thehextheory -- npx -y @thehextheory/cli mcp
+codex mcp add thehextheory -- npx -y @thehextheory/cli mcp
+```
+
+The same config, for anyone editing it by hand:
 
 ```json
 {
@@ -78,7 +87,14 @@ Cursor can call the same tools over stdio. Add this to the MCP settings:
 }
 ```
 
-The server exposes `check_contrast`, `fix_contrast`, `generate_scale`, and `match_token`. Colors accept `#ff6347`, `tomato`, and `rgb()`.
+The server has four tools. Colors accept `#ff6347`, `tomato`, and `rgb()`.
+
+- "Check the contrast of `#777777` on white."
+- "Fix `#eeeeee` on white so it reaches 4.5:1."
+- "Generate a tomato scale named tomato."
+- "Match `#ff2244` to the nearest token in this project."
+
+`match_token` reads the project where the editor started the server. The CLI README describes what each tool returns.
 
 ## From TypeScript
 

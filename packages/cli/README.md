@@ -71,6 +71,19 @@ Comments, strings, regex literals, and template literals are skipped while match
 
 ## MCP
 
+The server speaks stdio. Node 20 or newer is required. The first run downloads this package through `npx`.
+
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=thehextheory&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkB0aGVoZXh0aGVvcnkvY2xpIiwibWNwIl19)
+
+Claude Code and Codex take a command instead of that button:
+
+```bash
+claude mcp add --scope user thehextheory -- npx -y @thehextheory/cli mcp
+codex mcp add thehextheory -- npx -y @thehextheory/cli mcp
+```
+
+`--scope user` keeps the Claude Code server for every project. Leave it off to save it for the current folder only. To edit the config by hand:
+
 ```json
 {
   "mcpServers": {
@@ -82,6 +95,13 @@ Comments, strings, regex literals, and template literals are skipped while match
 }
 ```
 
-`check_contrast` returns the WCAG ratio, AA and AAA, and APCA Lc. `fix_contrast` returns a foreground hex that reaches the target ratio, 4.5 by default. `generate_scale` returns the 50–950 ramp; `theme: true` returns the `@theme` block. `match_token` returns the nearest `--color-*` or Tailwind config color in the working directory, or the nearest Tailwind step and CSS name when the directory has none.
+Once it is connected, ask for one of the four tools:
+
+- "Check the contrast of `#777777` on white." `check_contrast` returns the WCAG ratio, AA and AAA, and APCA Lc.
+- "Fix `#eeeeee` on white so it reaches 4.5:1." `fix_contrast` returns a foreground hex that reaches the target ratio, 4.5 by default.
+- "Generate a tomato scale named tomato." `generate_scale` returns the 50–950 ramp. `theme: true` returns the `@theme` block.
+- "Match `#ff2244` to the nearest token in this project." `match_token` reads the Tailwind config and `--color-*` variables in the folder where the editor started the server. With none there, it returns the nearest Tailwind step and CSS color name.
+
+Colors accept `#ff6347`, `tomato`, and `rgb()`.
 
 Node 20 or newer. MIT License.
